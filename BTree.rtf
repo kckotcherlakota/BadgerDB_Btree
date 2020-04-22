@@ -1,0 +1,238 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2512
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa240\qj\partightenfactor0
+
+\f0\fs29\fsmilli14667 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\
+PROJECT 3- BTREE\
+This project focused on implementing a B+ Tree index on a search key of integer type in a typical relation. The idea behind implementing an index is to improve performance when accessing elements in the relation. This is accomplished by storing <key,rid> pairs into the B+ Tree index. Efficient use of the B+ Tree and Buffer Manager are important to the structure and must
+\f1  
+\f0 be
+\f1  
+\f0 taken
+\f1  
+\f0 into
+\f1  
+\f0 consideration. 
+\f1\fs24 \cb1 \
+
+\f0\fs29\fsmilli14667 \cb3 In our implementation, data records from a relation are inserted one at a time. When the index file is created for the first time, the root of the B+ tree initialized as a type of leaf node instead of a nonleaf node. The reason to make the initial root as a leaf node is to accommodate small relation files whose data entries will not fill up a leaf page. In this case, we can save one I/O cost per search and also save disk space. In the insert process, \'93insert\'94 function is recursively called on itself until a correct leaf page is found and corresponding pages are unpinned immediately. The maximum number of pages pinned in the insert process is the height of the B+ tree. During scan ranges, we traverse the tree and unpin corresponding pages immediately. This leads to only one paged pinned at a time. When the first page that might contain the lowest search key is found, we search from left to right in the leaf level by utilizing the pointers to sibling leaf pages. This avoids any unnecessary upward and downward traversal in the tree. Finally we make sure again to unpin pages which we do not need as soon a possible in order to avoid buffer overflows. We believe that these design choice follow the idea of a simple
+\f1  
+\f0 yet
+\f1  
+\f0 efficient
+\f1  
+\f0 B+
+\f1  
+\f0 Tree
+\f1  
+\f0 index,
+\f1  
+\f0 especially
+\f1  
+\f0 when
+\f1  
+\f0 we
+\f1  
+\f0 consider
+\f1  
+\f0 the
+\f1  
+\f0 requirements
+\f1  
+\f0 for
+\f1  
+\f0 testing. 
+\f1\fs24 \cb1 \
+
+\f0\fs29\fsmilli14667 \cb3 As for duplicate keys, we could use overflow pages to store duplicate values. More specifically, we can turn the leaf <key,rid> node into a pointer to a page that contains a data structure, while still retaining the sibling properties as stated by our standard B+ Tree. This structure could also focus on being a more efficient design than just a typical array depending on how we differentiate between entries. For example at this Key value we could implement a hash table or a B+ tree across other attributes. This would maximize performance and scalability
+\f1  
+\f0 of
+\f1  
+\f0 our
+\f1  
+\f0 Index,
+\f1  
+\f0 especially
+\f1  
+\f0 for
+\f1  
+\f0 instances
+\f1  
+\f0 where
+\f1  
+\f0 our
+\f1  
+\f0 Index
+\f1  
+\f0 contains
+\f1  
+\f0 many
+\f1  
+\f0 duplicates. 
+\f1\fs24 \cb1 \
+
+\f0\fs29\fsmilli14667 \cb3 As
+\f1  
+\f0 for
+\f1  
+\f0 the
+\f1  
+\f0 testing,
+\f1  
+\f0 addition
+\f1  
+\f0 to
+\f1  
+\f0 the
+\f1  
+\f0 three
+\f1  
+\f0 tests
+\f1  
+\f0 provided,
+\f1  
+\f0 we
+\f1  
+\f0 add
+\f1  
+\f0 more
+\f1  
+\f0 tests
+\f1  
+\f0 specific
+\f1  
+\f0 for these
+\f1  
+\f0 situation: 
+\f1\fs24 \cb1 \
+
+\f0\fs29\fsmilli14667 \cb3 1:
+\f1  
+\f0 When
+\f1  
+\f0 the
+\f1  
+\f0 data
+\f1  
+\f0 volume
+\f1  
+\f0 is
+\f1  
+\f0 large
+\f1  
+\f0 so
+\f1  
+\f0 we
+\f1  
+\f0 will
+\f1  
+\f0 counter
+\f1  
+\f0 the
+\f1  
+\f0 situation
+\f1  
+\f0 that
+\f1  
+\f0 non
+\f1  
+\f0 leaf
+\f1  
+\f0 page would
+\f1  
+\f0 also
+\f1  
+\f0 split. 
+\f1\fs24 \cb1 \
+
+\f0\fs29\fsmilli14667 \cb3 2:
+\f1  
+\f0 When
+\f1  
+\f0 the
+\f1  
+\f0 data
+\f1  
+\f0 is
+\f1  
+\f0 empty
+\f1  
+\f0 and
+\f1  
+\f0 we
+\f1  
+\f0 have
+\f1  
+\f0 a
+\f1  
+\f0 empty
+\f1  
+\f0 tree.\cb1 \uc0\u8232 \cb3 3:
+\f1  
+\f0 When
+\f1  
+\f0 there
+\f1  
+\f0 is
+\f1  
+\f0 only
+\f1  
+\f0 one
+\f1  
+\f0 leaf
+\f1  
+\f0 node
+\f1  
+\f0 for
+\f1  
+\f0 the
+\f1  
+\f0 entire
+\f1  
+\f0 tree
+\f1  
+\f0 (data
+\f1  
+\f0 number
+\f1  
+\f0 <
+\f1  
+\f0 682).\cb1 \uc0\u8232 \cb3 4:
+\f1  
+\f0 When
+\f1  
+\f0 the
+\f1  
+\f0 relation
+\f1  
+\f0 contains
+\f1  
+\f0 negative
+\f1  
+\f0 values\cb1 \uc0\u8232 \cb3 We add these situation into the test with some combination of create relation forward 
+\f1\fs24 \cb1 \
+
+\f0\fs29\fsmilli14667 \cb3 and random to five extra tests with one more addition test for the error which is provided in the main.cpp file. All of these tests passed. The only issue is that when the data volume is too large, it
+\f1  
+\f0 took
+\f1  
+\f0 a
+\f1  
+\f0 while
+\f1  
+\f0 for
+\f1  
+\f0 constructing
+\f1  
+\f0 a
+\f1  
+\f0 B+
+\f1  
+\f0 tree 
+\f1\fs24 \cb1 \
+}
