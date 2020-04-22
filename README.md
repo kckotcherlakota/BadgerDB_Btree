@@ -11,7 +11,7 @@ This project focused on implementing a B+ Tree index on a search key of integer 
 ### instructions for 2nd time run. 
 1. cd to make dir, then use <B>make clean</B>
 2. then use <B>make</B> to build files 
-3. use ./src/badgerdb_main to run the exeu file 
+3. use <B>./src/badgerdb_main</B> to run the exeu file 
 
 
 ### testcases 
